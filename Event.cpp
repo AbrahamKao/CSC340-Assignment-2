@@ -1,6 +1,7 @@
 // TO DO: #include all the standard libraries and your own libraries here
 #include "Event.h"
 #include <iostream>
+#include <iomanip>
 // TO DO: function implementations
 
 // Constructor implementations, when the object is created, the constructor is alled, intialzing data members
@@ -29,6 +30,7 @@ void Event::display() const {
 	std::cout << "Rating: " << rating << std::endl;
 	std::cout << "Tickets Sold: " << soldTicketsCount << std::endl;
 }
+
 // ------------------------------------------------------------------------------
 // Operator overloading implementation
 bool Event::operator==(const Event& otherEvent) const {
