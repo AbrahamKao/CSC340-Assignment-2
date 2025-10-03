@@ -6,7 +6,6 @@
 using std::cout;
 using std::endl;
 
-// Parameterized constructor implementation
 Organizer::Organizer(const std::string& username,
                      const std::string& email,
                      const std::string& password,
@@ -15,7 +14,6 @@ Organizer::Organizer(const std::string& username,
     : username(username), email(email), password(password), 
       bio(bio), profilePicture(profilePicture) {}
 
-// Destructor to clean up dynamically allocated events
 Organizer::~Organizer() {
     std::vector<Event*> eventList = events.toVector();
     for (Event* event : eventList) {
@@ -23,7 +21,6 @@ Organizer::~Organizer() {
     }
 }
 
-// Accessor methods (getters)
 std::string Organizer::getUsername() const {
     return username;
 }
@@ -40,7 +37,6 @@ std::string Organizer::getProfilePicture() const {
     return profilePicture;
 }
 
-// Display profile method implementation (as per UML)
 void Organizer::displayProfile() const {
     cout << "Username: " << username << endl
          << "Email: " << email << endl
@@ -48,7 +44,6 @@ void Organizer::displayProfile() const {
          << "Profile Picture: " << profilePicture << endl;
 }
 
-// Modify password method implementation (as per UML)
 bool Organizer::modifyPassword(const std::string& newPassword) {
     if (newPassword.empty()) {
         return false;
@@ -57,7 +52,6 @@ bool Organizer::modifyPassword(const std::string& newPassword) {
     return true;
 }
 
-// Create event method implementation (as per UML)
 bool Organizer::createEvent(Event* event) {
     if (event == nullptr) {
         return false;
@@ -65,7 +59,6 @@ bool Organizer::createEvent(Event* event) {
     return events.add(event);
 }
 
-// Display all events method implementation (as per UML)
 void Organizer::displayAllEvents() const {
     if (events.isEmpty()) {
         cout << "No events found." << endl;
@@ -83,7 +76,6 @@ void Organizer::displayAllEvents() const {
     }
 }
 
-// Modify event method implementation (as per UML)
 Event* Organizer::modifyEvent(int k) {
     Node<Event*>* node = events.findKthItem(k);
     if (node != nullptr) {
@@ -92,7 +84,6 @@ Event* Organizer::modifyEvent(int k) {
     return nullptr;
 }
 
-// Sell ticket method implementation (as per UML)
 bool Organizer::sellTicket(int k, int quantity) {
     Node<Event*>* node = events.findKthItem(k);
     if (node != nullptr && node->getItem() != nullptr) {
@@ -101,26 +92,23 @@ bool Organizer::sellTicket(int k, int quantity) {
     return false;
 }
 
-// Delete event method implementation (as per UML)
 bool Organizer::deleteEvent(int k) {
     Node<Event*>* node = events.findKthItem(k);
     if (node != nullptr && node->getItem() != nullptr) {
         Event* eventToDelete = node->getItem();
         bool removed = events.remove(eventToDelete);
         if (removed) {
-            delete eventToDelete; // Clean up memory
+            delete eventToDelete;
         }
         return removed;
     }
     return false;
 }
 
-// Get event count helper method
 int Organizer::getEventCount() const {
     return events.getCurrentSize();
 }
 
-// Operator == overloading implementation
 bool Organizer::operator==(const Organizer& otherOrganizer) const {
     return (username == otherOrganizer.username) && (email == otherOrganizer.email);
 }

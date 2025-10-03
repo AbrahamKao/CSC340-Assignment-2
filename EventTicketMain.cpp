@@ -6,13 +6,6 @@
 
 using namespace std;
 
-/** 
- * 
- * Displays the application's main menu
- * pre create a new object of type Organizer
- * @param organizer object to interact with
- * 
- * */
 void displayOrganizerMenu(Organizer& organizer){
 	int organizerChoice = 0;
 	do {
@@ -31,15 +24,13 @@ void displayOrganizerMenu(Organizer& organizer){
 
 		switch (organizerChoice) {
 			case 1:{
-				// Display organizer's profile information
 				organizer.displayProfile();
 				break;
 			}
 			case 2: {
-				// Ask for new password and update organizer's password
 				string newPassword;
 				cout << "Enter new password: ";
-				cin.ignore(); // Clear input buffer
+				cin.ignore();
 				getline(cin, newPassword);
 				
 				if (organizer.modifyPassword(newPassword)) {
@@ -50,7 +41,6 @@ void displayOrganizerMenu(Organizer& organizer){
 				break;
 			}
 			case 3: {
-				// Ask organizer to choose event type, then ask them to input event details.
 				int eventType;
 				cout << "Choose event type:\n1. Virtual Event\n2. Venue Event\nChoice: ";
 				cin >> eventType;
@@ -104,7 +94,6 @@ void displayOrganizerMenu(Organizer& organizer){
 				break;
 			}
 			case 5: {
-				// Ask the organizer for a value k
 				int k;
 				cout << "Enter the event number (k): ";
 				cin >> k;
@@ -119,7 +108,6 @@ void displayOrganizerMenu(Organizer& organizer){
 				break;
 			}
 			case 6: {
-				// Ask the organizer for the index of the event they want to modify.
 				int k;
 				cout << "Enter the event number to modify: ";
 				cin >> k;
@@ -144,7 +132,6 @@ void displayOrganizerMenu(Organizer& organizer){
 				break;
 			}
 			case 7: {
-				// Ask the organizer for the index of the event and sell tickets
 				int k, quantity;
 				cout << "Enter the event number to sell tickets for: ";
 				cin >> k;
@@ -190,8 +177,7 @@ int main(){
 
 	cout << "\n Welcome to EventTicket340:" << endl;
 	
-	// Ask the organizer to enter their information 
-	string username, email, password, bio, profilePicture;
+	std::string username, email, password, bio, profilePicture;
 	
 	cout << "Enter your username: ";
 	getline(cin, username);
