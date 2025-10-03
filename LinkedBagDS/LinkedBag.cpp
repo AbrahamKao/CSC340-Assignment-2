@@ -9,10 +9,69 @@
 #include <cstddef>
 
 
-// Assignment 2 functions -------------------------------------------
-// TO DO: implement the two functions here
+template<class ItemType>
+Node<ItemType>* LinkedBag<ItemType>::findKthItem(const int& indexK) const {
+    if (indexK <= 0 || indexK > itemCount) {
+        return nullptr;
+    }
+    
+    Node<ItemType>* currentPtr = headPtr;
+    int currentIndex = 1;
+    
+    while (currentPtr != nullptr && currentIndex < indexK) {
+        currentPtr = currentPtr->getNext();
+        currentIndex++;
+    }
+    
+    return currentPtr;
+}
 
-// ------------------------------------------------------------------
+template<class ItemType>
+bool LinkedBag<ItemType>::reverseAppendK(const ItemType& newEntry, const int& k) {
+    if (k <= 0) {
+        return false;
+    }
+    
+    Node<ItemType>* newNodePtr = new Node<ItemType>(newEntry);
+    
+    if (headPtr == nullptr || k == 1) {
+        newNodePtr->setNext(headPtr);
+        headPtr = newNodePtr;
+        itemCount++;
+        return true;
+    }
+    
+    Node<ItemType>* prevPtr = nullptr;
+    Node<ItemType>* currentPtr = headPtr;
+    int currentIndex = 1;
+    
+    while (currentPtr != nullptr && currentIndex < k) {
+        prevPtr = currentPtr;
+        currentPtr = currentPtr->getNext();
+        currentIndex++;
+    }
+    
+    if (prevPtr != nullptr) {
+        newNodePtr->setNext(currentPtr);
+        prevPtr->setNext(newNodePtr);
+        itemCount++;
+        return true;
+    }
+    
+    if (prevPtr == nullptr && headPtr != nullptr) {
+        currentPtr = headPtr;
+        while (currentPtr->getNext() != nullptr) {
+            currentPtr = currentPtr->getNext();
+        }
+        currentPtr->setNext(newNodePtr);
+        newNodePtr->setNext(nullptr);
+        itemCount++;
+        return true;
+    }
+    
+    delete newNodePtr;
+    return false;
+}
 
 template<class ItemType>
 LinkedBag<ItemType>::LinkedBag() : headPtr(nullptr), itemCount(0){}  // end default constructor

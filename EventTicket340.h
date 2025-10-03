@@ -1,26 +1,24 @@
-#include "LinkedBagDS/LinkedBag.h"
+#ifndef EVENTTICKET340_H
+#define EVENTTICKET340_H
+
 #include <string>
 #include "Organizer.h"
-// TO DO include necessary libraries
 
- 
-
-// This class only contains a single organizer
 class EventTicket340 {
 private:
     Organizer organizer;
 
 public:
-    EventTicket340() = default;
-    ~EventTicket340() = default;
+    EventTicket340();
+    ~EventTicket340();
 
     void createOrganizer(const std::string& username,
                          const std::string& email,
                          const std::string& password,
                          const std::string& bio,
-                         const std::string& profilePicture) {
-        organizer = Organizer(username, email, password, bio, profilePicture);
-    }
+                         const std::string& profilePicture);
 
-    Organizer getOrganizer() const { return organizer; }
+    Organizer getOrganizer() const; 
 };
+
+#endif
