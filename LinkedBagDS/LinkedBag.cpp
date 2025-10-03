@@ -10,7 +10,78 @@
 
 
 // Assignment 2 functions -------------------------------------------
-// TO DO: implement the two functions here
+// Implementation of findKthItem function
+template<class ItemType>
+Node<ItemType>* LinkedBag<ItemType>::findKthItem(const int& indexK) const {
+    if (indexK <= 0 || indexK > itemCount) {
+        return nullptr; // Invalid index
+    }
+    
+    Node<ItemType>* currentPtr = headPtr;
+    int currentIndex = 1;
+    
+    // Traverse the linked list to find the kth item
+    while (currentPtr != nullptr && currentIndex < indexK) {
+        currentPtr = currentPtr->getNext();
+        currentIndex++;
+    }
+    
+    return currentPtr;
+}
+
+// Implementation of reverseAppendK function
+template<class ItemType>
+bool LinkedBag<ItemType>::reverseAppendK(const ItemType& newEntry, const int& k) {
+    if (k <= 0) {
+        return false; // Invalid k value
+    }
+    
+    // Create new node
+    Node<ItemType>* newNodePtr = new Node<ItemType>(newEntry);
+    
+    if (headPtr == nullptr || k == 1) {
+        // If bag is empty or k=1, add to beginning
+        newNodePtr->setNext(headPtr);
+        headPtr = newNodePtr;
+        itemCount++;
+        return true;
+    }
+    
+    // Find the (k-1)th node to insert after
+    Node<ItemType>* prevPtr = nullptr;
+    Node<ItemType>* currentPtr = headPtr;
+    int currentIndex = 1;
+    
+    while (currentPtr != nullptr && currentIndex < k) {
+        prevPtr = currentPtr;
+        currentPtr = currentPtr->getNext();
+        currentIndex++;
+    }
+    
+    // Insert the new node
+    if (prevPtr != nullptr) {
+        newNodePtr->setNext(currentPtr);
+        prevPtr->setNext(newNodePtr);
+        itemCount++;
+        return true;
+    }
+    
+    // If we couldn't find position k, add at the end
+    if (prevPtr == nullptr && headPtr != nullptr) {
+        // Find the last node
+        currentPtr = headPtr;
+        while (currentPtr->getNext() != nullptr) {
+            currentPtr = currentPtr->getNext();
+        }
+        currentPtr->setNext(newNodePtr);
+        newNodePtr->setNext(nullptr);
+        itemCount++;
+        return true;
+    }
+    
+    delete newNodePtr;
+    return false;
+}
 
 // ------------------------------------------------------------------
 
