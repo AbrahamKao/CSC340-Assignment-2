@@ -84,7 +84,7 @@ void displayOrganizerMenu(Organizer& organizer){
 					cout << "Event created successfully!" << endl;
 				} else {
 					cout << "Failed to create event." << endl;
-					delete newEvent; // Clean up if creation failed
+					delete newEvent;
 				}
 				break;
 			}
@@ -171,8 +171,6 @@ void displayOrganizerMenu(Organizer& organizer){
 
 
 int main(){
-	// Instantiating the program using the default constructor
-	// With this implementation, the application will only have one organizer
 	EventTicket340 eventTicket340; 
 
 	cout << "\n Welcome to EventTicket340:" << endl;
@@ -189,11 +187,8 @@ int main(){
 	getline(cin, bio);
 	cout << "Enter your profile picture URL: ";
 	getline(cin, profilePicture);
-
-	// Call eventTicket340 createOrganizer function 
-	eventTicket340.createOrganizer(username, email, password, bio, profilePicture);
-
-	// Retrieve the organizer 
+	
+	eventTicket340.createOrganizer(username, email, password, bio, profilePicture);	// Retrieve the organizer 
 	Organizer currentOrganizer = eventTicket340.getOrganizer();
 
 	// Display the main menu

@@ -24,13 +24,11 @@ private:
 	
 public:
 	LinkedBag();
-	LinkedBag(const LinkedBag<ItemType>& aBag); // Copy constructor
-	virtual ~LinkedBag();						// Destructor should be virtual
+	LinkedBag(const LinkedBag<ItemType>& aBag);
+	virtual ~LinkedBag();
 
-	// Assignment 2 functions -------------------------------------------
 	bool reverseAppendK(const ItemType& newEntry, const int& k);
 	Node<ItemType>* findKthItem(const int& indexK) const;
-	// ------------------------------------------------------------------
 	
 	int getCurrentSize() const;
 	bool isEmpty() const;

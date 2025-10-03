@@ -12,20 +12,18 @@ private:
     std::string password;
     std::string bio;
     std::string profilePicture;
-    LinkedBag<Event*> events; // LinkedBag to store event pointers
+    LinkedBag<Event*> events; 
 
 public:
-    // Default constructor
     Organizer() = default;
     
-    // Parameterized constructor
     Organizer(const std::string& username,
               const std::string& email,
               const std::string& password,
               const std::string& bio,
               const std::string& profilePicture);
     
-    // Methods as specified in UML diagram
+    
     void displayProfile() const;
     bool modifyPassword(const std::string& newPassword);
     bool createEvent(Event* event);
@@ -34,19 +32,15 @@ public:
     bool sellTicket(int k, int quantity);
     bool deleteEvent(int k);
     
-    // Accessor methods (getters) - not in UML but needed for functionality
     std::string getUsername() const;
     std::string getEmail() const;
     std::string getBio() const;
     std::string getProfilePicture() const;
     
-    // Helper method to get event count
     int getEventCount() const;
     
-    // Operator == overloading function
     bool operator==(const Organizer& otherOrganizer) const;
     
-    // Destructor to clean up dynamically allocated events
     ~Organizer();
 };
 
