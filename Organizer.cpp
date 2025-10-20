@@ -15,11 +15,8 @@ Organizer::Organizer(const std::string& username,
       bio(bio), profilePicture(profilePicture) {}
 
 Organizer::~Organizer() {
-    std::vector<Event*> eventList = events.toVector();
-    for (Event* event : eventList) {
-        delete event;
-    }
-}
+
+}      
 
 std::string Organizer::getUsername() const {
     return username;
@@ -52,10 +49,8 @@ bool Organizer::modifyPassword(const std::string& newPassword) {
     return true;
 }
 
-bool Organizer::createEvent(Event* event) {
-    if (event == nullptr) {
-        return false;
-    }
+bool Organizer::createEvent(const std::shared_ptr<Event>& event) {
+    if (!event)return false;
     return events.add(event);
 }
 
@@ -65,42 +60,30 @@ void Organizer::displayAllEvents() const {
         return;
     }
     
-    std::vector<Event*> eventList = events.toVector();
-    cout << "Total events: " << eventList.size() << endl;
+    auto vec = events.toVector();
+    cout << "Total events: " << vec.size() << endl;
     
-    for (size_t i = 0; i < eventList.size(); ++i) {
+    for (size_t i = 0; i < vec.size(); ++i) {
         cout << "\n--- Event " << (i + 1) << " ---" << endl;
-        if (eventList[i] != nullptr) {
-            eventList[i]->display();
-        }
+        if (vec[i]) vec[i]->display();
     }
 }
 
-Event* Organizer::modifyEvent(int k) {
-    Node<Event*>* node = events.findKthItem(k);
-    if (node != nullptr) {
-        return node->getItem();
-    }
-    return nullptr;
+std::shared_ptr<Event> Organizer::modifyEvent(int k) {
+    auto node = events.findKthItem(k);
+    return node ? node->getItem() : std::shared_ptr<Event>();
 }
 
 bool Organizer::sellTicket(int k, int quantity) {
-    Node<Event*>* node = events.findKthItem(k);
-    if (node != nullptr && node->getItem() != nullptr) {
-        return node->getItem()->sell(quantity);
-    }
-    return false;
+    auto node = events.findKthItem(k);
+    return (node && node->getItem()) ? node-> getItem()->sell(quantity) : false;
 }
 
 bool Organizer::deleteEvent(int k) {
-    Node<Event*>* node = events.findKthItem(k);
-    if (node != nullptr && node->getItem() != nullptr) {
-        Event* eventToDelete = node->getItem();
-        bool removed = events.remove(eventToDelete);
-        if (removed) {
-            delete eventToDelete;
-        }
-        return removed;
+    auto node = events.findKthItem(k);
+    if (node && node->getItem()) {
+        auto e = node->getItem();
+        return events.remove(e);
     }
     return false;
 }
