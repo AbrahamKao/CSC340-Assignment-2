@@ -1,10 +1,18 @@
 #include <iostream> 
 #include <string>
+#include <memory>
+#include <limits>
 
 #include "EventTicket340.h"
+#include "Organizer.h"
 #include "Event.h"
-
-using namespace std;
+using std::cout;
+using std::cin;
+using std::string;
+using std::shared_ptr;
+using std::make_shared;
+using std::getline;
+using std::endl;
 
 void displayOrganizerMenu(Organizer& organizer){
 	int organizerChoice = 0;
@@ -56,7 +64,7 @@ void displayOrganizerMenu(Organizer& organizer){
 				cout << "Enter event rating (0-5): ";
 				cin >> rating;
 				
-				Event* newEvent = nullptr;
+				shared_ptr<Event> newEvent;
 				
 				if (eventType == 1) {
 					cout << "Enter stream link: ";
@@ -64,7 +72,7 @@ void displayOrganizerMenu(Organizer& organizer){
 					getline(cin, extraField1);
 					cout << "Enter audience type: ";
 					getline(cin, extraField2);
-					newEvent = new VirtualEvent(name, description, rating, extraField1, extraField2);
+					newEvent = make_shared<VirtualEvent>(name, description, rating, extraField1, extraField2);
 				} else if (eventType == 2) {
 					int capacity;
 					cout << "Enter venue: ";
@@ -74,7 +82,7 @@ void displayOrganizerMenu(Organizer& organizer){
 					getline(cin, extraField2);
 					cout << "Enter capacity: ";
 					cin >> capacity;
-					newEvent = new VenueEvent(name, description, rating, extraField1, extraField2, capacity);
+					newEvent = make_shared<VenueEvent>(name, description, rating, extraField1, extraField2, capacity);
 				} else {
 					cout << "Invalid event type." << endl;
 					break;
@@ -84,7 +92,7 @@ void displayOrganizerMenu(Organizer& organizer){
 					cout << "Event created successfully!" << endl;
 				} else {
 					cout << "Failed to create event." << endl;
-					delete newEvent;
+					
 				}
 				break;
 			}
