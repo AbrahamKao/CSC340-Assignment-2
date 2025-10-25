@@ -96,3 +96,29 @@ int Organizer::getEventCount() const {
 bool Organizer::operator==(const Organizer& otherOrganizer) const {
     return (username == otherOrganizer.username) && (email == otherOrganizer.email);
 }
+
+std::ostream& operator<<(std::ostream& out, const Organizer& o){
+    out << "Username: "  << o.username << '\n'
+        << "Email: " << o.email << '\n'
+        << "Bio: " << o.bio << '\n'
+        << "Profile Picture: " << o.profilePicture << '\n';
+    return out;
+}
+
+static void newLine(std::istream& in){
+    if (in.peek() == '\n') 
+        in.get();
+}
+
+std::istream& operator>>(std::istream& in, Organizer& o){
+    std::string username, email, password, bio, profilePicture;
+    
+    std::getline(in, username);
+    std::getline(in, email);
+    std::getline(in, password);
+    std::getline(in, bio);
+    std::getline(in, profilePicture);
+    
+    o = Organizer(username, email, password, bio, profilePicture);
+    return in;
+}

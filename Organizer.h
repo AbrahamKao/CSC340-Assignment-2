@@ -5,6 +5,7 @@
 #include "LinkedBagDS/LinkedBag.h"
 #include "Event.h"
 #include <memory>
+#include <iostream>
 
 class Organizer {
 private:
@@ -43,6 +44,9 @@ public:
     bool operator==(const Organizer& otherOrganizer) const;
     
     ~Organizer();
+
+    friend std::ostream& operator<<(std::ostream& out, const Organizer& o);
+    friend std::istream& operator>>(std::istream& in,  Organizer& o);
 };
 
 #endif

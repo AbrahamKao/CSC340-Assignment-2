@@ -19,6 +19,11 @@ public:
                          const std::string& profilePicture);
 
     Organizer getOrganizer() const; 
+
+    friend std::ostream& operator<<(std::ostream& out, const EventTicket340& et){
+    out << "Welcome to EventTicket340!" << std::endl;
+    return out;
+    }
 };
 
 #endif
