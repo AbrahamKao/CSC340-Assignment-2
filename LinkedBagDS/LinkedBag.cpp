@@ -7,69 +7,90 @@
 #include "LinkedBag.h"
 #include "Node.h"
 #include <cstddef>
+#include <memory>
 
 
 template<class ItemType>
 Node<ItemType>* LinkedBag<ItemType>::findKthItem(const int& indexK) const {
-    if (indexK <= 0 || indexK > itemCount) {
+    // check if k is valid
+    if (indexK <= 0) {
+        return nullptr;
+    }
+    if (indexK > itemCount) {
         return nullptr;
     }
     
-    Node<ItemType>* currentPtr = headPtr;
-    int currentIndex = 1;
+    // go through the list
+    Node<ItemType>* ptr = headPtr;
+    int count = 1;
     
-    while (currentPtr != nullptr && currentIndex < indexK) {
-        currentPtr = currentPtr->getNext();
-        currentIndex++;
+    // keep going until we find k
+    while (ptr != nullptr) {
+        if (count == indexK) {
+            return ptr;
+        }
+        ptr = ptr->getNext();
+        count++;
     }
     
-    return currentPtr;
+    return nullptr;
 }
 
 template<class ItemType>
 bool LinkedBag<ItemType>::reverseAppendK(const ItemType& newEntry, const int& k) {
+    // make sure k is positive
     if (k <= 0) {
         return false;
     }
     
-    Node<ItemType>* newNodePtr = new Node<ItemType>(newEntry);
+    // make new node
+    Node<ItemType>* newNode = new Node<ItemType>(newEntry);
     
-    if (headPtr == nullptr || k == 1) {
-        newNodePtr->setNext(headPtr);
-        headPtr = newNodePtr;
+    // if list empty or k is 1, put at front
+    if (headPtr == nullptr) {
+        headPtr = newNode;
+        newNode->setNext(nullptr);
         itemCount++;
         return true;
     }
     
-    Node<ItemType>* prevPtr = nullptr;
-    Node<ItemType>* currentPtr = headPtr;
-    int currentIndex = 1;
-    
-    while (currentPtr != nullptr && currentIndex < k) {
-        prevPtr = currentPtr;
-        currentPtr = currentPtr->getNext();
-        currentIndex++;
-    }
-    
-    if (prevPtr != nullptr) {
-        newNodePtr->setNext(currentPtr);
-        prevPtr->setNext(newNodePtr);
+    if (k == 1) {
+        newNode->setNext(headPtr);
+        headPtr = newNode;
         itemCount++;
         return true;
     }
     
-    if (prevPtr == nullptr && headPtr != nullptr) {
-        currentPtr = headPtr;
-        while (currentPtr->getNext() != nullptr) {
-            currentPtr = currentPtr->getNext();
-        }
-        currentPtr->setNext(newNodePtr);
-        newNodePtr->setNext(nullptr);
+    // find the k position
+    Node<ItemType>* temp = headPtr;
+    Node<ItemType>* prev = nullptr;
+    int i = 1;
+    
+    // try to get to position k
+    while (i < k && temp != nullptr) {
+        prev = temp;
+        temp = temp->getNext();
+        i++;
+    }
+    
+    // insert at position k
+    if (i == k) {
+        prev->setNext(newNode);
+        newNode->setNext(temp);
         itemCount++;
         return true;
     }
     
-    delete newNodePtr;
+    // k was too big, add at end
+    if (temp == nullptr) {
+        prev->setNext(newNode);
+        newNode->setNext(nullptr);
+        itemCount++;
+        return true;
+    }
+    
+    // something went wrong
+    delete newNode;
     return false;
 }
 

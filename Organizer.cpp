@@ -1,5 +1,4 @@
 #include "Organizer.h"
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -12,7 +11,7 @@ Organizer::Organizer(const std::string& username,
                      const std::string& password,
                      const std::string& bio,
                      const std::string& profilePicture)
-    : username(username), email(email), password(password), 
+    : username(username), email(email), password(password),
       bio(bio), profilePicture(profilePicture) {}
 
 Organizer::~Organizer() {
@@ -36,10 +35,10 @@ std::string Organizer::getProfilePicture() const {
 }
 
 void Organizer::displayProfile() const {
-    cout << "Username: " << username << endl
-         << "Email: " << email << endl
-         << "Bio: " << bio << endl
-         << "Profile Picture: " << profilePicture << endl;
+    std::cout << "Username: " << username << '\n'
+              << "Email: " << email << '\n'
+              << "Bio: " << bio << '\n'
+              << "Profile Picture: " << profilePicture << '\n';
 }
 
 bool Organizer::modifyPassword(const std::string& newPassword) {

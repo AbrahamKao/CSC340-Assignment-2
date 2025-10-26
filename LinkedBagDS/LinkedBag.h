@@ -1,9 +1,4 @@
-//  Created by Frank M. Carrano and Timothy M. Henry.
-//  Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
 
-/** ADT bag: Link-based implementation.
-	 @file LinkedBag.h 
-	 Listing 4-3 */
 #ifndef LINKED_BAG_
 #define LINKED_BAG_
 
