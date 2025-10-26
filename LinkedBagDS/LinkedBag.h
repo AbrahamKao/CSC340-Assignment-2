@@ -1,7 +1,4 @@
-// Jonathan Phung
-// CSC340 - Assignment 2
-// Fall 2023
-// LinkedBag class - stores items in a linked list
+
 #ifndef LINKED_BAG_
 #define LINKED_BAG_
 

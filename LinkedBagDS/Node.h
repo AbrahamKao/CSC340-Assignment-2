@@ -1,6 +1,4 @@
-// Jonathan Phung
-// CSC340 - Assignment 2
-// Fall 2023
+
 #ifndef NODE_
 #define NODE_
 
