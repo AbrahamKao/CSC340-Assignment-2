@@ -5,53 +5,60 @@
 using namespace std;
 
 int main() {
-    LinkedBag<shared_ptr<Event>> events;
+    LinkedBag<shared_ptr<Event>> myBag;
     
-    auto event1 = make_shared<VirtualEvent>("Concert 1", "First test concert", 5, "youtube.com/concert1", "Everyone");
-    auto event2 = make_shared<VirtualEvent>("Concert 2", "Second test concert", 4, "youtube.com/concert2", "18+");
-    auto event3 = make_shared<VirtualEvent>("Concert 3", "Third test concert", 3, "youtube.com/concert3", "All ages");
+    // making some test events
+    auto e1 = make_shared<VirtualEvent>("My Concert", "testing", 5, "twitch.tv/myconcert", "anyone");
+    auto e2 = make_shared<VirtualEvent>("Another Show", "more testing", 4, "youtube.com/show", "18+");
+    auto e3 = make_shared<VirtualEvent>("Last Event", "final test", 3, "mixer.com/event", "21+");
     
-    cout << "Testing my extra credit implementation:\n\n";
+    cout << "trying reverseAppendK first:\n";
     
-    cout << "First test - adding event1:\n";
-    events.reverseAppendK(event1, 1);
-    auto vec = events.toVector();
-    vec[0]->display();
+    // test 1 - empty bag
+    cout << "putting first event in empty bag\n";
+    myBag.reverseAppendK(e1, 1);
+    auto v = myBag.toVector();
+    v[0]->display();
     
-    cout << "\nSecond test - adding event2:\n";
-    events.reverseAppendK(event2, 1);
-    vec = events.toVector();
-    for (int i = 0; i < vec.size(); i++) {
-        vec[i]->display();
-        cout << "\n";
+    // test 2 - adding to front
+    cout << "\nputting second event at front\n";
+    myBag.reverseAppendK(e2, 1);
+    v = myBag.toVector();
+    for (int i = 0; i < v.size(); i++) {
+        v[i]->display();
+        cout << endl;
     }
     
-    cout << "Third test - adding event3 at position 2:\n";
-    events.reverseAppendK(event3, 2);
-    vec = events.toVector();
-    for (int i = 0; i < vec.size(); i++) {
-        vec[i]->display();
-        cout << "\n";
+    // test 3 - middle insert
+    cout << "adding third event in middle\n";
+    myBag.reverseAppendK(e3, 2);
+    v = myBag.toVector();
+    for (int i = 0; i < v.size(); i++) {
+        v[i]->display();
+        cout << endl;
     }
     
-    cout << "Now testing findKthItem function:\n";
+    cout << "testing findKthItem now:\n";
     
-    cout << "\nLet's find first item:\n";
-    auto node = events.findKthItem(1);
-    if (node) {
-        node->getItem()->display();
+    // checking first item
+    cout << "getting first item\n";
+    auto n = myBag.findKthItem(1);
+    if (n) {
+        n->getItem()->display();
     }
     
-    cout << "\nLet's find second item:\n";
-    node = events.findKthItem(2);
-    if (node) {
-        node->getItem()->display();
+    // second item
+    cout << "getting second item\n";
+    n = myBag.findKthItem(2);
+    if (n) {
+        n->getItem()->display();
     }
     
-    cout << "\nTrying invalid position (should fail):\n";
-    node = events.findKthItem(4);
-    if (!node) {
-        cout << "Cool, it returned nullptr like it should\n";
+    // trying bad input
+    cout << "trying bad position\n";
+    n = myBag.findKthItem(4);
+    if (!n) {
+        cout << "got nullptr - good\n";
     }
     
     return 0;

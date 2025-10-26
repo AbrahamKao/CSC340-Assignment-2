@@ -12,60 +12,84 @@
 
 template<class ItemType>
 Node<ItemType>* LinkedBag<ItemType>::findKthItem(const int& indexK) const {
-    if (indexK <= 0 || indexK > itemCount) {
+    // check if k is valid
+    if (indexK <= 0) {
+        return nullptr;
+    }
+    if (indexK > itemCount) {
         return nullptr;
     }
     
-    auto current = headPtr;
-    int pos = 1;
+    // go through the list
+    Node<ItemType>* ptr = headPtr;
+    int count = 1;
     
-    while (current != nullptr && pos < indexK) {
-        current = current->getNext();
-        pos++;
+    // keep going until we find k
+    while (ptr != nullptr) {
+        if (count == indexK) {
+            return ptr;
+        }
+        ptr = ptr->getNext();
+        count++;
     }
     
-    return current;
+    return nullptr;
 }
 
 template<class ItemType>
 bool LinkedBag<ItemType>::reverseAppendK(const ItemType& newEntry, const int& k) {
+    // make sure k is positive
     if (k <= 0) {
         return false;
     }
     
-    auto newNode = new Node<ItemType>(newEntry);
+    // make new node
+    Node<ItemType>* newNode = new Node<ItemType>(newEntry);
     
-    if (!headPtr || k == 1) {
+    // if list empty or k is 1, put at front
+    if (headPtr == nullptr) {
+        headPtr = newNode;
+        newNode->setNext(nullptr);
+        itemCount++;
+        return true;
+    }
+    
+    if (k == 1) {
         newNode->setNext(headPtr);
         headPtr = newNode;
         itemCount++;
         return true;
     }
     
-    auto current = headPtr;
-    auto prev = nullptr;
-    int pos = 1;
+    // find the k position
+    Node<ItemType>* temp = headPtr;
+    Node<ItemType>* prev = nullptr;
+    int i = 1;
     
-    while (current && pos < k) {
-        prev = current;
-        current = current->getNext();
-        pos++;
+    // try to get to position k
+    while (i < k && temp != nullptr) {
+        prev = temp;
+        temp = temp->getNext();
+        i++;
     }
     
-    if (pos == k) {
-        newNode->setNext(current);
+    // insert at position k
+    if (i == k) {
         prev->setNext(newNode);
+        newNode->setNext(temp);
         itemCount++;
         return true;
     }
     
-    if (!current && prev) {
+    // k was too big, add at end
+    if (temp == nullptr) {
         prev->setNext(newNode);
         newNode->setNext(nullptr);
         itemCount++;
         return true;
     }
     
+    // something went wrong
     delete newNode;
     return false;
 }
