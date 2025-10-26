@@ -7,6 +7,7 @@
 #include "LinkedBag.h"
 #include "Node.h"
 #include <cstddef>
+#include <memory>
 
 
 template<class ItemType>
@@ -15,15 +16,15 @@ Node<ItemType>* LinkedBag<ItemType>::findKthItem(const int& indexK) const {
         return nullptr;
     }
     
-    Node<ItemType>* currentPtr = headPtr;
-    int currentIndex = 1;
+    auto current = headPtr;
+    int pos = 1;
     
-    while (currentPtr != nullptr && currentIndex < indexK) {
-        currentPtr = currentPtr->getNext();
-        currentIndex++;
+    while (current != nullptr && pos < indexK) {
+        current = current->getNext();
+        pos++;
     }
     
-    return currentPtr;
+    return current;
 }
 
 template<class ItemType>
@@ -32,44 +33,40 @@ bool LinkedBag<ItemType>::reverseAppendK(const ItemType& newEntry, const int& k)
         return false;
     }
     
-    Node<ItemType>* newNodePtr = new Node<ItemType>(newEntry);
+    auto newNode = new Node<ItemType>(newEntry);
     
-    if (headPtr == nullptr || k == 1) {
-        newNodePtr->setNext(headPtr);
-        headPtr = newNodePtr;
+    if (!headPtr || k == 1) {
+        newNode->setNext(headPtr);
+        headPtr = newNode;
         itemCount++;
         return true;
     }
     
-    Node<ItemType>* prevPtr = nullptr;
-    Node<ItemType>* currentPtr = headPtr;
-    int currentIndex = 1;
+    auto current = headPtr;
+    auto prev = nullptr;
+    int pos = 1;
     
-    while (currentPtr != nullptr && currentIndex < k) {
-        prevPtr = currentPtr;
-        currentPtr = currentPtr->getNext();
-        currentIndex++;
+    while (current && pos < k) {
+        prev = current;
+        current = current->getNext();
+        pos++;
     }
     
-    if (prevPtr != nullptr) {
-        newNodePtr->setNext(currentPtr);
-        prevPtr->setNext(newNodePtr);
+    if (pos == k) {
+        newNode->setNext(current);
+        prev->setNext(newNode);
         itemCount++;
         return true;
     }
     
-    if (prevPtr == nullptr && headPtr != nullptr) {
-        currentPtr = headPtr;
-        while (currentPtr->getNext() != nullptr) {
-            currentPtr = currentPtr->getNext();
-        }
-        currentPtr->setNext(newNodePtr);
-        newNodePtr->setNext(nullptr);
+    if (!current && prev) {
+        prev->setNext(newNode);
+        newNode->setNext(nullptr);
         itemCount++;
         return true;
     }
     
-    delete newNodePtr;
+    delete newNode;
     return false;
 }
 

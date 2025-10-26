@@ -1,9 +1,7 @@
-//  Created by Frank M. Carrano and Timothy M. Henry.
-//  Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
-
-/** ADT bag: Link-based implementation.
-	 @file LinkedBag.h 
-	 Listing 4-3 */
+// Jonathan Phung
+// CSC340 - Assignment 2
+// Fall 2023
+// LinkedBag class - stores items in a linked list
 #ifndef LINKED_BAG_
 #define LINKED_BAG_
 

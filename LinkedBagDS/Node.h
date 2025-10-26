@@ -1,8 +1,6 @@
-//  Created by Frank M. Carrano and Timothy M. Henry.
-//  Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
-
-/** @file Node.h 
-    Listing 4-1 */
+// Jonathan Phung
+// CSC340 - Assignment 2
+// Fall 2023
 #ifndef NODE_
 #define NODE_
 
